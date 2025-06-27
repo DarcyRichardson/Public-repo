@@ -14,7 +14,7 @@ conda create -n weather-app python=3.11
 conda activate weather-app
 
 # 3 – install packages (one-off inside this env)
-pip install streamlit pandas numpy requests pydeck geopy scikit-learn
+pip install streamlit pandas numpy requests pydeck geopy scikit-learn matplotlib
 
 # 4 – move to your project folder
 cd "C:/Users/DarcyRichardson/cerecon.com.au/Cerecon Business - Documents/14. Business intelligence/Lost days weather app"
