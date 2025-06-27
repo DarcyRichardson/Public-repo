@@ -332,25 +332,6 @@ with tab1:
     site_df = pd.DataFrame({"lat": [lat], "lon": [lon]})
     st.map(site_df, zoom=12)          # adjust zoom to taste
 
-    st.subheader(f"Crane downtime risk - ML/Monte Carlo model")
-    st.table(summary_df(qs_c, "Crane", horizon_days))
-    st.subheader("Weather downtime risk- ML/Monte Carlo model")
-    st.table(summary_df(qs_w, "Weather", horizon_days))
-
-    # histogram
-    fig = go.Figure()
-    fig.add_histogram(x=dist_c, name="Crane")
-    fig.add_histogram(x=dist_w, name="Weather")
-    fig.update_layout(
-        barmode="overlay",
-        title=f"Lost working days over {horizon_days}-day horizon",
-        xaxis_title="Lost days",
-        yaxis_title="Frequency",
-        template="plotly_white",
-    )
-    fig.update_traces(opacity=0.6)
-    st.plotly_chart(fig, use_container_width=True)
-
 # ── Monthly downtime table ─────────────────────────────────────────
     # 1️⃣  Make sure dt is datetime64
     if not pd.api.types.is_datetime64_any_dtype(daily_summary["dt"]):
@@ -407,6 +388,27 @@ with tab1:
         }),
         use_container_width=True
     )
+
+    st.subheader(f"Crane downtime risk - ML/Monte Carlo model")
+    st.table(summary_df(qs_c, "Crane", horizon_days))
+    st.subheader("Weather downtime risk- ML/Monte Carlo model")
+    st.table(summary_df(qs_w, "Weather", horizon_days))
+
+    # histogram
+    fig = go.Figure()
+    fig.add_histogram(x=dist_c, name="Crane")
+    fig.add_histogram(x=dist_w, name="Weather")
+    fig.update_layout(
+        barmode="overlay",
+        title=f"Lost working days over {horizon_days}-day horizon",
+        xaxis_title="Lost days",
+        yaxis_title="Frequency",
+        template="plotly_white",
+    )
+    fig.update_traces(opacity=0.6)
+    st.plotly_chart(fig, use_container_width=True)
+
+
 with tab2:
     # hourly rain probability
     rain_prob = (
