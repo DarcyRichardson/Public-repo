@@ -391,7 +391,7 @@ with tab1:
 
     st.subheader(f"Crane downtime risk - ML/Monte Carlo model")
     st.table(summary_df(qs_c, "Crane", horizon_days))
-    st.subheader("Weather downtime risk- ML/Monte Carlo model")
+    st.subheader("Weather downtime risk - ML/Monte Carlo model")
     st.table(summary_df(qs_w, "Weather", horizon_days))
 
     # histogram
