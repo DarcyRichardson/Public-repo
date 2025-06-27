@@ -389,6 +389,27 @@ with tab1:
         use_container_width=True
     )
 
+    st.subheader("Probability of Rain by Hour and Month")
+    # 1. Calculate the probability of rain for each month and hour.
+    #    This is the fraction of hours where rain_mm > 0.
+    rain_prob_table = (
+        hourly_raw
+        .groupby([hourly_raw.index.month, hourly_raw.index.hour])['rain_mm']
+        .apply(lambda x: (x > 0).mean())
+        .unstack(level=0)  # Pivot months to become columns
+    )
+
+    # 2. Tidy up the labels for presentation.
+    rain_prob_table.index.name = "Hour of Day"
+    rain_prob_table.columns = [calendar.month_abbr[m] for m in rain_prob_table.columns]
+
+    # 3. Display the table with percentage formatting and a color gradient.
+    st.dataframe(
+        rain_prob_table.style.format("{:.1%}")
+                    .background_gradient(cmap='Blues', axis=None),
+        use_container_width=True
+    )
+
     st.subheader(f"Crane downtime risk - ML/Monte Carlo model")
     st.table(summary_df(qs_c, "Crane", horizon_days))
     st.subheader("Weather downtime risk - ML/Monte Carlo model")
