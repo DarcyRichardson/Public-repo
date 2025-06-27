@@ -3,4 +3,5 @@ pandas>=2.3
 numpy>=2.3
 requests>=2.32
 scikit-learn>=1.5           # RandomForest, IsotonicRegression
-plotly>=5.22   
+plotly>=5.22  
+matplotlib>=3.8
