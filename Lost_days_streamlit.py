@@ -94,7 +94,8 @@ def heat_downtime_flag(df: pd.DataFrame, shift_start_hr: int) -> pd.Series:
     df = df.copy()
     df["shift_day"] = (df.index - pd.Timedelta(hours=shift_start_hr)).date
     first_hot = df[df["temp_c"] >= 35].groupby("shift_day").apply(lambda x: x.index.min())
-    df["heat_start"] = df["shift_day"].map(first_hot)
+    # Convert first_hot to dict for mapping
+    df["heat_start"] = df["shift_day"].map(first_hot.to_dict())
     return (df.index >= df["heat_start"]).astype(int)
 
 def rain_downtime_flag(day_df: pd.DataFrame) -> pd.Series:
